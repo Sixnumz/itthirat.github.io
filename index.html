@@ -1,43 +1,59 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Itthirat Portfolio">
+    <meta name="description" content="Portfolio of Itthirat Sakulthippayanan - Creative Web Designer and Developer">
+    <meta name="keywords" content="Itthirat, Portfolio, Web Developer, Programmer, Web Design">
+    <meta name="author" content="Itthirat Sakulthippayanan">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
     <title>Itthirat - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         body {
-            font-family: 'Noto Sans Thai', 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
             background: #0f172a;
             color: #e2e8f0;
+            position: relative;
+            margin: 0;
+        }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
         .parallax {
             position: relative;
-            background: linear-gradient(135deg, #a855f7, #3b82f6, #ec4899);
-            background-attachment: fixed;
-            background-size: cover;
+            min-height: 100vh;
             overflow: hidden;
+            background: linear-gradient(135deg, #a855f7, #3b82f6, #ec4899);
         }
-        .parallax::before {
-            content: '';
+        #particles-js {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Cfilter id="bb"%3E%3CfeGaussianBlur in="SourceGraphic" stdDeviation="20" /%3E%3C/filter%3E%3Ccircle cx="400" cy="400" r="300" fill="%23ffffff20" filter="url(%23bb)" /%3E%3Ccircle cx="200" cy="200" r="150" fill="%23a855f720" filter="url(%23bb)" /%3E%3Ccircle cx="600" cy="600" r="150" fill="%23ec489920" filter="url(%23bb)" /%3E%3C/svg%3E');
-            animation: particleMove 20s linear infinite;
             z-index: 0;
-        }
-        @keyframes particleMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100px); }
         }
         .magicui-glowing-button {
             background: linear-gradient(45deg, #a855f7, #ec4899);
@@ -46,34 +62,39 @@
             position: relative;
             overflow: hidden;
             border-radius: 9999px;
-            padding: 12px 24px;
+            padding: 10px 20px;
             font-weight: 600;
             transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); }
+            100% { box-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
         }
         .magicui-glowing-button::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300%;
-            height: 300%;
-            background: rgba(255, 255, 255, 0.2);
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.15);
             transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
         .magicui-glowing-button:hover::before {
             transform: translate(-50%, -50%) scale(1);
         }
         .magicui-glowing-button:hover {
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.7);
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         .magicui-animated-text {
             background: linear-gradient(90deg, #ffffff, #a855f7, #ec4899, #ffffff);
             background-size: 200%;
             -webkit-background-clip: text;
             color: transparent;
-            animation: shine 4s linear infinite;
+            animation: shine 3s linear infinite;
         }
         @keyframes shine {
             0% { background-position: 200%; }
@@ -84,11 +105,12 @@
             overflow: hidden;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .portfolio-overlay {
             position: absolute;
@@ -96,8 +118,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
             opacity: 0;
             transition: opacity 0.3s ease;
             display: flex;
@@ -125,11 +147,13 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            max-width: 600px;
-            width: 90%;
-            padding: 20px;
+            max-width: 90%;
+            width: 600px;
+            padding: 16px;
             position: relative;
             animation: glowBorder 2s infinite;
+            overflow-y: auto;
+            max-height: 90vh;
         }
         @keyframes glowBorder {
             0%, 100% { border-color: rgba(168, 85, 247, 0.5); }
@@ -137,9 +161,9 @@
         }
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
+            top: 8px;
+            right: 12px;
+            font-size: 1.25rem;
             cursor: pointer;
             color: #fff;
             transition: transform 0.3s ease;
@@ -148,16 +172,33 @@
             transform: rotate(90deg);
         }
         .magicui-icon-cloud a {
+            position: relative;
             transition: transform 0.3s ease, color 0.3s ease;
         }
         .magicui-icon-cloud a:hover {
             transform: translateY(-5px) rotate(15deg);
             color: #ec4899;
         }
+        .magicui-icon-cloud a::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            border-radius: 50%;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            animation: orbit 4s linear infinite;
+        }
+        @keyframes orbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         nav {
             background: rgba(17, 24, 39, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            z-index: 100;
         }
         nav a {
             position: relative;
@@ -176,134 +217,316 @@
         nav a:hover::after {
             width: 100%;
         }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 50;
+        }
+        .scroll-to-top.visible {
+            opacity: 1;
+        }
+        .scroll-to-top:hover {
+            transform: scale(1.1);
+        }
+        .lotus-animation {
+            display: inline-block;
+            animation: lotusBloom 1.5s ease-in-out;
+        }
+        @keyframes lotusBloom {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(17, 24, 39, 0.95);
+                width: 100%;
+                padding: 16px;
+                text-align: center;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                transform: translateY(-10px);
+                opacity: 0;
+                z-index: 99;
+            }
+            .navbar-menu.active {
+                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+            }
+            .navbar-toggle {
+                display: block;
+                margin-left: auto;
+            }
+            .navbar-menu a {
+                margin: 8px 0;
+                font-size: 1rem;
+            }
+            .portfolio-item img {
+                height: 180px;
+            }
+            .magicui-glass-modal {
+                width: 95%;
+                padding: 12px;
+                max-height: 85vh;
+            }
+            .magicui-glass-modal img {
+                height: 160px;
+            }
+            .magicui-glowing-button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            .section {
+                padding: 3rem 0;
+            }
+            h1 {
+                font-size: 2.25rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+            .portfolio-item img {
+                height: 140px;
+            }
+            .magicui-glass-modal img {
+                height: 120px;
+            }
+            .magicui-glowing-button {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            .magicui-icon-cloud a {
+                font-size: 1.5rem;
+            }
+        }
+        @media (min-width: 769px) {
+            .navbar-menu {
+                display: flex !important;
+            }
+            .navbar-toggle {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="text-purple-400 text-2xl"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+    </div>
+
     <!-- Navbar -->
     <nav class="fixed top-0 w-full shadow-lg z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h2 class="text-2xl font-bold text-purple-400">Itthirat Sakulthippayanan</h2>
-            <div class="space-x-6">
-                <a href="#home" class="text-gray-300 hover:text-purple-400 transition">Home</a>
-                <a href="#about" class="text-gray-300 hover:text-purple-400 transition">About Us</a>
-                <a href="#portfolio" class="text-gray-300 hover:text-purple-400 transition">Portfolio</a>
-                <a href="#contact" class="text-gray-300 hover:text-purple-400 transition">Contact Us</a>
+        <div class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <h2 class="text-lg sm:text-xl font-bold text-purple-400">Itthirat Sakulthippayanan</h2>
+            <button class="navbar-toggle text-purple-400 text-xl sm:hidden" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+            <div class="navbar-menu flex flex-col sm:flex-row sm:space-x-6 items-center">
+                <a href="#home" class="text-gray-300 hover:text-purple-400 transition text-sm sm:text-base" aria-label="Home">Home</a>
+                <a href="#about" class="text-gray-300 hover:text-purple-400 transition text-sm sm:text-base" aria-label="About">About</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-purple-400 transition text-sm sm:text-base" aria-label="Portfolio">Portfolio</a>
+                <a href="#contact" class="text-gray-300 hover:text-purple-400 transition text-sm sm:text-base" aria-label="Contact">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Header -->
-    <div class="parallax h-screen flex flex-col items-center justify-center text-center text-white" id="home">
-        <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392959818947629256/anime-boy-balcony-watching-sunset-city-illustration.jpg?ex=68716e6c&is=68701cec&hm=277395a4cd3790183f1efd8b8b5961e8aae48f44dc21e01f1e86f60ea9c7761a&" alt="Profile Picture" class="rounded-full w-48 h-48 object-cover border-4 border-white/30 mb-6" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-perspective="1000">
-        <h1 class="text-6xl font-bold mb-4 magicui-animated-text" data-aos="fade-up">HI, I'm Itthirat</h1>
-        <p class="text-xl max-w-2xl mb-8" data-aos="fade-up" data-aos-delay="100">I'm be a Junior Programer Web Application</p>
-        <button class="magicui-glowing-button" data-aos="fade-up" data-aos-delay="200">Details</button>
+    <!-- Hero Section -->
+    <div class="parallax flex flex-col items-center justify-center text-center text-white" id="home">
+        <div id="particles-js"></div>
+        <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392959818947629256/anime-boy-balcony-watching-sunset-city-illustration.jpg?ex=68716e6c&is=68701cec&hm=277395a4cd3790183f1efd8b8b5961e8aae48f44dc21e01f1e86f60ea9c7761a&" alt="Itthirat's Profile Picture" class="profile-img rounded-full w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 object-cover border-4 border-white/30 mb-4 sm:mb-6" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 magicui-animated-text" data-aos="fade-up">Hi, I'm Itthirat</h1>
+        <p class="text-sm sm:text-base md:text-lg max-w-md sm:max-w-lg md:max-w-2xl mb-6 sm:mb-8 px-4" data-aos="fade-up" data-aos-delay="100">Junior Web Developer crafting modern and intuitive web experiences</p>
+        <div class="flex space-x-3 sm:space-x-4">
+            <button class="magicui-glowing-button" data-aos="fade-up" data-aos-delay="200" onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' })">View Portfolio</button>
+            <a href="/path/to/your-cv.pdf" download class="magicui-glowing-button" data-aos="fade-up" data-aos-delay="300">Download CV <span class="lotus-animation">🌸</span></a>
+        </div>
     </div>
 
     <!-- About Section -->
-    <div class="section py-20 bg-gray-900" id="about">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 text-purple-300" data-aos="fade-up">About Us</h2>
-            <div class="flex flex-col md:flex-row items-center gap-10">
+    <div class="section py-12 sm:py-16 md:py-20 bg-gray-900" id="about">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-purple-300" data-aos="fade-up">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-10">
                 <div class="md:w-1/2" data-aos="fade-right">
-                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392959713569804288/japan-background-digital-art.jpg?ex=68716e53&is=68701cd3&hm=c8c672470b9b837a7c5d398cf2f0ace46c7faf36476588ae3b8d4b2d3a8b8558&" alt="About Me" class="rounded-lg w-full h-80 object-cover" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392959713569804288/japan-background-digital-art.jpg?ex=68716e53&is=68701cd3&hm=c8c672470b9b837a7c5d398cf2f0ace46c7faf36476588ae3b8d4b2d3a8b8558&" alt="About Itthirat" class="rounded-lg w-full h-40 sm:h-64 md:h-80 object-cover lazy" loading="lazy">
                 </div>
                 <div class="md:w-1/2" data-aos="fade-left">
-                    <p class="text-lg text-gray-300 leading-relaxed">I'm like Programing, Networkd and Computer, I'm Learing IT(Information Technology) on VBAC(RAMINDRA) College</p>
-                    <p class="text-lg text-gray-300 leading-relaxed mt-4">My Target is a Senior Programer and can make money</p>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed">Passionate about programming, networking, and technology, I’m currently studying IT at VBAC (Ramindra) College.</p>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed mt-3 sm:mt-4">My goal is to become a senior developer, creating innovative web solutions that make an impact.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Portfolio Section -->
-    <div class="section py-20 bg-gray-800" id="portfolio">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 text-purple-300" data-aos="fade-up">Portfolio</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="portfolio-item" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392951283643846877/image.png?ex=68716679&is=687014f9&hm=3a77a6af016cf97ba70cb2c942809bbc2b3f4f8b9fd43673b65bb2956e1019f9&" alt="Project 1" class="w-full h-64 object-cover">
+    <div class="section py-12 sm:py-16 md:py-20 bg-gray-800" id="portfolio">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-purple-300" data-aos="fade-up">Portfolio</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+                <div class="portfolio-item" data-tilt data-tilt-max="8" data-tilt-speed="300" data-tilt-perspective="800" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392951283643846877/image.png?ex=68716679&is=687014f9&hm=3a77a6af016cf97ba70cb2c942809bbc2b3f4f8b9fd43673b65bb2956e1019f9&" alt="AllGlassWeb Project" class="w-full h-40 sm:h-48 md:h-64 object-cover lazy" loading="lazy">
                     <div class="portfolio-overlay">
                         <button class="magicui-glowing-button" onclick="openModal('modal1')">Details</button>
                     </div>
-                    <p class="p-6 text-center text-gray-300">Project 1: AllGlassWeb</p>
+                    <p class="p-3 sm:p-4 md:p-6 text-center text-gray-300 text-xs sm:text-sm md:text-base">Project 1: AllGlassWeb</p>
                 </div>
-                <div class="portfolio-item" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392957560528572547/image.png?ex=68716c52&is=68701ad2&hm=4ce2e1522994dd1a617ba860f77e63b6eeb4e543d6d93bc68b6d1420fb74ab06&" alt="Project 2" class="w-full h-80 object-cover">
+                <div class="portfolio-item" data-tilt data-tilt-max="8" data-tilt-speed="300" data-tilt-perspective="800" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392957560528572547/image.png?ex=68716c52&is=68701ad2&hm=4ce2e1522994dd1a617ba860f77e63b6eeb4e543d6d93bc68b6d1420fb74ab06&" alt="E-Commerce Website Project" class="w-full h-40 sm:h-48 md:h-64 object-cover lazy" loading="lazy">
                     <div class="portfolio-overlay">
                         <button class="magicui-glowing-button" onclick="openModal('modal2')">Details</button>
                     </div>
-                    <p class="p-6 text-center text-gray-300">Project 2: E-Commerce Website</p>
+                    <p class="p-3 sm:p-4 md:p-6 text-center text-gray-300 text-xs sm:text-sm md:text-base">Project 2: E-Commerce Website</p>
                 </div>
-                <div class="portfolio-item" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392960084346142842/image.png?ex=68716eac&is=68701d2c&hm=6ec9900a7cdece5bceaf00ae52fae26192fdb9fd67b1bac59e2acf200613ffc9&" alt="Project 3" class="w-full h-48 object-cover">
+                <div class="portfolio-item" data-tilt data-tilt-max="8" data-tilt-speed="300" data-tilt-perspective="800" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392960084346142842/image.png?ex=68716eac&is=68701d2c&hm=6ec9900a7cdece5bceaf00ae52fae26192fdb9fd67b1bac59e2acf200613ffc9&" alt="Contact UI Project" class="w-full h-40 sm:h-48 md:h-64 object-cover lazy" loading="lazy">
                     <div class="portfolio-overlay">
                         <button class="magicui-glowing-button" onclick="openModal('modal3')">Details</button>
                     </div>
-                    <p class="p-6 text-center text-gray-300">Project 3: Contact UI</p>
+                    <p class="p-3 sm:p-4 md:p-6 text-center text-gray-300 text-xs sm:text-sm md:text-base">Project 3: Contact UI</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Contact Section -->
-    <div class="section py-20 bg-gradient-to-r from-purple-900 to-blue-900" id="contact">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-12 text-purple-300" data-aos="fade-up">Contact Us</h2>
-            <p class="text-lg text-gray-300 mb-8">have a questions? Send me a message!</p>
-            <div class="flex justify-center space-x-6 magicui-icon-cloud">
-                <a href="mailto:deaw1804@gmail.com" class="text-purple-400 text-2xl"><i class="fas fa-envelope"></i></a>
-                <!-- <a href="https://linkedin.com/in/yourprofile" class="text-purple-400 text-2xl"><i class="fab fa-linkedin"></i></a> -->
-                <a href="https://www.instagram.com/18aprilz_/" class="text-purple-400 text-2xl"><i class="fab fa-instagram"></i></a> 
-                <a href="https://github.com/yourprofile" class="text-purple-400 text-2xl"><i class="fab fa-github"></i></a>
+    <div class="section py-12 sm:py-16 md:py-20 bg-gradient-to-r from-purple-900 to-blue-900" id="contact">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-purple-300" data-aos="fade-up">Get in Touch</h2>
+            <p class="text-sm sm:text-base md:text-lg text-gray-300 mb-6 sm:mb-8" data-aos="fade-up" data-aos-delay="100">Want to collaborate or have questions? Connect with me!</p>
+            <div class="flex justify-center space-x-4 sm:space-x-6 md:space-x-8 magicui-icon-cloud" data-tilt data-tilt-max="8" data-tilt-speed="300" data-tilt-perspective="800">
+                <a href="mailto:deaw1804@gmail.com" class="text-purple-400 text-xl sm:text-2xl md:text-3xl" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.instagram.com/18aprilz_/" class="text-purple-400 text-xl sm:text-2xl md:text-3xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/[YOUR_GITHUB_USERNAME]" class="text-purple-400 text-xl sm:text-2xl md:text-3xl" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://line.me/ti/p/[YOUR_LINE_ID]" class="text-purple-400 text-xl sm:text-2xl md:text-3xl" aria-label="LINE"><i class="fab fa-line"></i></a>
             </div>
+            <a href="/path/to/your-cv.pdf" download class="magicui-glowing-button mt-6 sm:mt-8 inline-block" data-aos="fade-up" data-aos-delay="200">Download CV <span class="lotus-animation">🌸</span></a>
         </div>
     </div>
 
     <!-- Footer -->
-    <div class="bg-gray-900 text-gray-300 text-center py-6">
-        <p>© 2025 Itthirat. All rights reserved.</p>
+    <div class="bg-gray-900 text-gray-300 text-center py-4 sm:py-6">
+        <p class="text-xs sm:text-sm">© 2025 Itthirat. All rights reserved.</p>
     </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
 
     <!-- Modals -->
     <div id="modal1" class="modal">
         <div class="magicui-glass-modal" data-aos="zoom-in">
-            <span class="modal-close" onclick="closeModal('modal1')">×</span>
-            <h3 class="text-2xl font-bold mb-4 text-purple-300">Project 1: AllGlassWeb</h3>
-            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392951283643846877/image.png?ex=68716679&is=687014f9&hm=3a77a6af016cf97ba70cb2c942809bbc2b3f4f8b9fd43673b65bb2956e1019f9&" alt="Project 1" class="w-full h-64 object-cover rounded-lg mb-4">
-            <p class="text-gray-300">Website For Allglass Aluminium</p>
+            <span class="modal-close" onclick="closeModal('modal1')" aria-label="Close modal">×</span>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-purple-300">Project 1: AllGlassWeb</h3>
+            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392951283643846877/image.png?ex=68716679&is=687014f9&hm=3a77a6af016cf97ba70cb2c942809bbc2b3f4f8b9fd43673b65bb2956e1019f9&" alt="AllGlassWeb Project" class="w-full h-36 sm:h-48 md:h-64 object-cover rounded-lg mb-3 sm:mb-4 lazy" loading="lazy">
+            <p class="text-gray-300 text-xs sm:text-sm md:text-base">A modern, user-friendly website for Allglass Aluminium</p>
         </div>
     </div>
     <div id="modal2" class="modal">
         <div class="magicui-glass-modal" data-aos="zoom-in">
-            <span class="modal-close" onclick="closeModal('modal2')">×</span>
-            <h3 class="text-2xl font-bold mb-4 text-purple-300">Project 2: E-Commerce Website</h3>
-            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392957560528572547/image.png?ex=68716c52&is=68701ad2&hm=4ce2e1522994dd1a617ba860f77e63b6eeb4e543d6d93bc68b6d1420fb74ab06&" alt="Project 2" class="w-full h-64 object-cover rounded-lg mb-4">
-            <p class="text-gray-300">Online Shoping Website</p>
+            <span class="modal-close" onclick="closeModal('modal2')" aria-label="Close modal">×</span>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-purple-300">Project 2: E-Commerce Website</h3>
+            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392957560528572547/image.png?ex=68716c52&is=68701ad2&hm=4ce2e1522994dd1a617ba860f77e63b6eeb4e543d6d93bc68b6d1420fb74ab06&" alt="E-Commerce Website Project" class="w-full h-36 sm:h-48 md:h-64 object-cover rounded-lg mb-3 sm:mb-4 lazy" loading="lazy">
+            <p class="text-gray-300 text-xs sm:text-sm md:text-base">A feature-rich online shopping platform with a stunning design</p>
         </div>
     </div>
     <div id="modal3" class="modal">
         <div class="magicui-glass-modal" data-aos="zoom-in">
-            <span class="modal-close" onclick="closeModal('modal3')">×</span>
-            <h3 class="text-2xl font-bold mb-4 text-purple-300">Project 3: Design Contact UI</h3>
-            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392960084346142842/image.png?ex=68716eac&is=68701d2c&hm=6ec9900a7cdece5bceaf00ae52fae26192fdb9fd67b1bac59e2acf200613ffc9&" alt="Project 3" class="w-full h-64 object-cover rounded-lg mb-4">
-            <p class="text-gray-300">Design Contact UI For Some Website</p>
+            <span class="modal-close" onclick="closeModal('modal3')" aria-label="Close modal">×</span>
+            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-purple-300">Project 3: Contact UI</h3>
+            <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1392960084346142842/image.png?ex=68716eac&is=68701d2c&hm=6ec9900a7cdece5bceaf00ae52fae26192fdb9fd67b1bac59e2acf200613ffc9&" alt="Contact UI Project" class="w-full h-36 sm:h-48 md:h-64 object-cover rounded-lg mb-3 sm:mb-4 lazy" loading="lazy">
+            <p class="text-gray-300 text-xs sm:text-sm md:text-base">A modern, intuitive Contact UI designed for seamless user interaction</p>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-            max: 10,
-            speed: 400,
-            perspective: 1000,
-            glare: true,
-            "max-glare": 0.3
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 500);
         });
 
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true, disable: 'mobile' });
+
+        // Initialize Vanilla Tilt
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 8,
+            speed: 300,
+            perspective: 800,
+            glare: true,
+            "max-glare": 0.2
+        });
+
+        // Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: ['#a855f7', '#ec4899', '#3b82f6'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 2, direction: 'none', random: true }
+            },
+            interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'repulse' } } },
+            retina_detect: true
+        });
+
+        // Navbar Toggle
+        const navbarToggle = document.querySelector('.navbar-toggle');
+        const navbarMenu = document.querySelector('.navbar-menu');
+        navbarToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.navbar-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarMenu.classList.remove('active');
+            });
+        });
+
+        // Modal Functions
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
+            confetti({
+                particleCount: 50,
+                spread: 50,
+                origin: { y: 0.6 }
+            });
         }
 
         function closeModal(modalId) {
@@ -314,7 +537,21 @@
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
-        }
+        };
+
+        // Debounced Scroll for Scroll-to-Top
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollButton = document.querySelector('.scroll-to-top');
+                if (window.scrollY > 300) {
+                    scrollButton.classList.add('visible');
+                } else {
+                    scrollButton.classList.remove('visible');
+                }
+            }, 100);
+        });
     </script>
 </body>
 </html>

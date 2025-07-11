@@ -248,6 +248,86 @@
             50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
             100% { transform: scale(1) rotate(360deg); opacity: 1; }
         }
+        /* Audio Player Styles */
+        .audio-player {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 70;
+            max-width: 320px;
+            width: 90%;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .audio-player.hidden {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            pointer-events: none;
+        }
+        .audio-player img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+        .audio-player button {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .audio-player button:hover {
+            color: #ec4899;
+        }
+        .audio-player input[type="range"] {
+            width: 100px;
+            accent-color: #a855f7;
+        }
+        .song-name {
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .song-timer {
+            color: #e2e8f0;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .audio-toggle {
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .audio-toggle:hover {
+            transform: scale(1.1);
+        }
         /* Responsive Styles */
         @media (max-width: 768px) {
             .navbar-menu {
@@ -306,6 +386,29 @@
             p {
                 font-size: 0.9rem;
             }
+            .audio-player {
+                max-width: 260px;
+                padding: 10px;
+            }
+            .audio-player img {
+                width: 50px;
+                height: 50px;
+            }
+            .audio-player input[type="range"] {
+                width: 80px;
+            }
+            .song-name {
+                font-size: 0.8rem;
+            }
+            .song-timer {
+                font-size: 0.7rem;
+            }
+            .audio-toggle {
+                bottom: 70px;
+                right: 12px;
+                width: 36px;
+                height: 36px;
+            }
         }
         @media (max-width: 640px) {
             h1 {
@@ -330,6 +433,29 @@
             }
             .magicui-icon-cloud a {
                 font-size: 1.5rem;
+            }
+            .audio-player {
+                max-width: 220px;
+                padding: 8px;
+            }
+            .audio-player img {
+                width: 40px;
+                height: 40px;
+            }
+            .audio-player input[type="range"] {
+                width: 60px;
+            }
+            .song-name {
+                font-size: 0.7rem;
+            }
+            .song-timer {
+                font-size: 0.65rem;
+            }
+            .audio-toggle {
+                bottom: 60px;
+                right: 10px;
+                width: 32px;
+                height: 32px;
             }
         }
         @media (min-width: 769px) {
@@ -443,6 +569,24 @@
     <!-- Scroll to Top Button -->
     <button class="scroll-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
 
+    <!-- Audio Toggle Button -->
+    <button class="audio-toggle" id="audio-toggle" aria-label="Toggle audio player"><i class="fas fa-music"></i></button>
+
+    <!-- Audio Player -->
+    <div class="audio-player hidden" id="audio-player">
+        <audio id="background-audio" autoplay loop>
+            <source src="https://cdn.discordapp.com/attachments/1316824226530984027/1393241005465141339/MaxMillor_-_ft.2TFlow.mp3?ex=6872744c&is=687122cc&hm=e72aeb447b66668399ed0be2ae87ea2a97a05fa91e3ecc9b5f6fde9763f24717&" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <img src="https://cdn.discordapp.com/attachments/1316824226530984027/1393241163367977101/mqdefault.png?ex=68727472&is=687122f2&hm=f8ce78106c7424cf2834fd16a16b0c010d85fc67d73bfd1f3dcded64d724f616&" alt="Song Cover" class="song-cover">
+        <div class="flex items-center gap-4">
+            <button id="play-pause-btn" aria-label="Play or pause music"><i class="fas fa-play"></i></button>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.2">
+        </div>
+        <div class="song-name" id="song-name">Now Playing: MaxMillor - ไม่ต้องปลอบ ไม่เป็นไร ออกไป ขอบคุณ</div>
+        <div class="song-timer" id="song-timer">00:00 / 00:00</div>
+    </div>
+
     <!-- Modals -->
     <div id="modal1" class="modal">
         <div class="magicui-glass-modal" data-aos="zoom-in">
@@ -551,6 +695,59 @@
                     scrollButton.classList.remove('visible');
                 }
             }, 100);
+        });
+
+        // Audio Player Controls
+        const audio = document.getElementById('background-audio');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const songName = document.getElementById('song-name');
+        const songTimer = document.getElementById('song-timer');
+        const audioPlayer = document.getElementById('audio-player');
+        const audioToggle = document.getElementById('audio-toggle');
+
+        // Set initial volume
+        audio.volume = 0.1;
+
+        // Play/Pause Toggle
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        // Volume Control
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value;
+        });
+
+        // Update Song Name
+        songName.textContent = 'Now Playing: SoundHelix Song 1';
+
+        // Audio Toggle
+        audioToggle.addEventListener('click', () => {
+            audioPlayer.classList.toggle('hidden');
+        });
+
+        // Timer Update
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const currentTime = audio.currentTime;
+            const duration = audio.duration || 0;
+            songTimer.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            songTimer.textContent = `00:00 / ${formatTime(audio.duration)}`;
         });
     </script>
 </body>
